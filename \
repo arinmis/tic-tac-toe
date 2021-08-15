@@ -1,0 +1,50 @@
+const X = 1; 
+const O = -1;
+let round = 0;
+const clickedBoxs = new Set()  
+const gameArray = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']] 
+
+// put x or o
+function play(id) {
+    // played box
+    if (clickedBoxs.has(id)) {
+        return;
+    }
+    let index = getIndex(whichButton(id))
+    console.log(index)
+    element = document.getElementById(id);
+    if (round % 2 == 0) {
+        element.innerHTML = 'X' 
+        gameArray[index[0]][index[1]] = X
+        console.log(gameArray)
+    }
+    else {
+        element.innerHTML = O 
+        gameArray[index[0]][index[1]] = O
+        console.log(gameArray)
+    }
+    clickedBoxs.add(id)
+    round++;
+}
+
+// extract button number
+function whichButton(id) {
+    return parseInt(id.charAt(id.length - 1))
+}
+
+function getIndex(number) {
+    number--; // zero index
+    let row = parseInt(number / 3);
+    let column = number % 3;
+    return [row, column] 
+
+}
+
+// return winner if game is finished
+function check() {
+    //check row
+    for (let i = 0; i < gameArray.length; i++) {
+        let xSum = gameArray[i][0] + gameArray[i][1] + gameArray[i][2];
+        let ySum = 0;
+    }
+}
