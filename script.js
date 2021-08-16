@@ -2,12 +2,13 @@ const X = 1;
 const O = -1;
 let round = 0;
 let clickedBoxs = new Set()  
+let isGameFinished = false;
 const gameArray = [[], [], []] 
 
 // put x or o
 function play(id) {
     // played box
-    if (clickedBoxs.has(id)) {
+    if (clickedBoxs.has(id) || isGameFinished) {
         return;
     }
     let index = getIndex(whichBox(id))
@@ -23,11 +24,13 @@ function play(id) {
     // check is game over
     const result  = check();
     if (result == X) {
+        isGameFinished = true;
         setTimeout(function() {
             alert("X won")
         }, 0)
     }
     else if (result == O) {
+        isGameFinished = true;
         setTimeout(function() {
             alert("O won")
         }, 0)
@@ -84,6 +87,7 @@ function check() {
 
 // reset the game
 function reset() {
+    isGameFinished = false;
     // reset game array
     for (let i = 0; i < gameArray.length; i++) {
         for (let j = 0; j < gameArray.length; j++) {
