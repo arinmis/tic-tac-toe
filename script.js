@@ -27,16 +27,25 @@ function play(id) {
         isGameFinished = true;
         setTimeout(function() {
             alert("X won")
-        }, 0)
+        }, 500)
     }
     else if (result == O) {
         isGameFinished = true;
         setTimeout(function() {
             alert("O won")
-        }, 0)
+        }, 500)
     }
     clickedBoxs.add(id)
     round++;
+    // draw
+    if (round == 9 && !isGameFinished) {
+        isGameFinished = true;
+        setTimeout(function() {
+            alert("Draw")
+        }, 500)
+        isGameFinished = true;
+    }
+
 }
 
 // extract box index 
@@ -78,7 +87,9 @@ function check() {
 
 // reset the game
 function reset() {
+    // resest game parameters
     isGameFinished = false;
+    round = 0;
     // reset game array
     for (let i = 0; i < state.length; i++) {
             state[i] = 0;
