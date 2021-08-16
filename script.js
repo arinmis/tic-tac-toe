@@ -83,10 +83,11 @@ function reset() {
     for (let i = 0; i < state.length; i++) {
             state[i] = 0;
     }
+    // reset clicked boxes
     clickedBoxs = new Set()
     // reset ui
     for (let i = 0; i < 9; i++) {
         document.getElementById("game-box" + (i + 1)).innerHTML = null; 
     }
-    // reset clicked boxes
+    
 }
