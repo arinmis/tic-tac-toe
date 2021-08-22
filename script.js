@@ -11,7 +11,7 @@ function play(id) {
     id = parseInt(id) // to store in set
 
     // box already filled
-    if (filledBoxs.has(id) || isGameFinished) {
+    if (filledBoxs.has(id) || isGameFinished || round % 2 == 1) {
         return;
     }
 
@@ -137,10 +137,12 @@ function agent() {
     let id = validMoves[Math.floor(Math.random() * validMoves.length)]
     element = document.getElementById(id);
     // player plays
-    element.innerHTML = 'O' 
+    setTimeout(function() {
+        element.innerHTML = 'O' 
+        round++;
+    }, 400)
     state[id] = O
     filledBoxs.add(id)
-    round++;
 }
 
 // find all empty spots
