@@ -1,57 +1,77 @@
-const X = 1; 
-const O = -1;
+const X = 1; // represent  player 
+const O = -1; // represent agent
+const EMPTY = 0;
+const state = emptyState(); 
 let round = 0;
-let clickedBoxs = new Set()  
+let filledBoxs = new Set()  
 let isGameFinished = false;
-const state = []
 
 // put x or o
 function play(id) {
-    // played box
-    if (clickedBoxs.has(id) || isGameFinished) {
+    id = parseInt(id) // to store in set
+
+    // box already filled
+    if (filledBoxs.has(id) || isGameFinished) {
         return;
     }
-    let index = getIndex(id)
-    element = document.getElementById(id);
-    if (round % 2 == 0) {
-        element.innerHTML = 'X' 
-        state[index] = X
-    }
-    else {
-        element.innerHTML = 'O' 
-        state[index] = O
-    }
-    // check is game over
-    const result  = check();
-    if (result == X) {
-        isGameFinished = true;
-        setTimeout(function() {
-            alert("X won")
-        }, 500)
-    }
-    else if (result == O) {
-        isGameFinished = true;
-        setTimeout(function() {
-            alert("O won")
-        }, 500)
-    }
-    clickedBoxs.add(id)
+
+    let element = document.getElementById(id);
+
+    // player plays
+    element.innerHTML = 'X' 
+    state[id] = X 
+    filledBoxs.add(id)
     round++;
-    // draw
+
+
+    // check is game over
+    let winner = check();
+    // finish game if there is winner
+    if (winner != null) 
+        finishGame(winner)
+
     if (round == 9 && !isGameFinished) {
         isGameFinished = true;
-        setTimeout(function() {
-            alert("Draw")
-        }, 500)
-        isGameFinished = true;
+        display("Draw")
     }
 
+    if (isGameFinished)
+        return;
+
+    // agent plays
+    agent()
+
+    // check is game over
+    winner = check();
+    // finish game if there is winner
+    if (winner != null) 
+        finishGame(winner)
+
+    console.log(filledBoxs)
+
+    // draw
+
 }
 
-// extract box index 
-function getIndex(id) {
-    return parseInt(id.charAt(id.length - 1)) - 1;
+// finish game and display winner
+function finishGame(winner) {
+    isGameFinished = true;
+    let message;
+    if (winner == X) 
+        message = "X won"
+    else if (winner == O)
+        message = "O won" 
+    display(message)
+
 }
+
+// display pop-up message 
+function display(message) {
+    setTimeout(function() {
+        alert(message)
+    }, 500)
+}
+
 
 // return winner if game is finished
 function check() {
@@ -83,6 +103,7 @@ function check() {
         return X;
     if (diagonal2 == -3)
         return O;
+    return null;
 }
 
 // reset the game
@@ -95,10 +116,40 @@ function reset() {
             state[i] = 0;
     }
     // reset clicked boxes
-    clickedBoxs = new Set()
+    filledBoxs = new Set()
     // reset ui
     for (let i = 0; i < 9; i++) {
-        document.getElementById("game-box" + (i + 1)).innerHTML = null; 
+        document.getElementById(i).innerHTML = null; 
     }
     
+}
+
+function emptyState() {
+    let state = []
+    for (let i = 0; i < 9; i++)
+        state.push(0)
+    return state; 
+}
+
+// random player agent
+function agent() {
+    let validMoves = getValidMoves();
+    let id = validMoves[Math.floor(Math.random() * validMoves.length)]
+    element = document.getElementById(id);
+    // player plays
+    element.innerHTML = 'O' 
+    state[id] = O
+    filledBoxs.add(id)
+    round++;
+}
+
+// find all empty spots
+function getValidMoves() {
+    let moves = []
+    for (let i = 0; i < state.length; i++) {
+        if (state[i] == EMPTY)
+            moves.push(i)
+    }
+    console.log(moves)
+    return moves;
 }
