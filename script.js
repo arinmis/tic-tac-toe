@@ -47,7 +47,6 @@ function play(id) {
     if (winner != null) 
         finishGame(winner)
 
-    console.log(filledBoxs)
 
     // draw
 
@@ -152,6 +151,5 @@ function getValidMoves() {
         if (state[i] == EMPTY)
             moves.push(i)
     }
-    console.log(moves)
     return moves;
 }
