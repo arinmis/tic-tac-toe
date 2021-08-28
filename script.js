@@ -71,30 +71,30 @@ function check(state) {
     for (let i = 0; i < 3; i++) {
         let sum = state[0 + (i * 3)] + state[1 + (i * 3)] + state[2 + (i * 3)];
         if (sum == 3)
-            return X;
-        if (sum == -3)
             return O;
+        if (sum == -3)
+            return X;
     }
     // check column
     for (let i = 0; i < 3; i++) {
         let sum = state[0 + i] + state[3 + i] + state[6 + i];
         if (sum == 3)
-            return X;
-        if (sum == -3)
             return O;
+        if (sum == -3)
+            return X;
     }
     // check diagonals
     let diagonal1 =  state[0] + state[4] + state[8];  
     if (diagonal1 == 3)
-        return X;
-    if (diagonal1 == -3)
         return O;
+    if (diagonal1 == -3)
+        return X;
 
     let diagonal2 =  state[2] + state[4] + state[6];  
     if (diagonal2 == 3)
-        return X;
-    if (diagonal2 == -3)
         return O;
+    if (diagonal2 == -3)
+        return X;
     // no winner
     return null;
 }
@@ -125,7 +125,7 @@ function emptyState() {
 }
 
 // find all empty spots
-function getValidMoves() {
+function getValidMoves(state) {
     let moves = []
     for (let i = 0; i < state.length; i++) {
         if (state[i] == EMPTY)
@@ -147,22 +147,28 @@ function draw(id, player) {
     // update datas
 }
 
-// random player agent
+/****************random*******************/
+// select move randomly
 function agentRandom() {
-    let validMoves = getValidMoves();
+    let validMoves = getValidMoves(state);
     let id = validMoves[Math.floor(Math.random() * validMoves.length)]
+    state[id] = O; 
+    filledBoxs.add(id)
     // player plays
     setTimeout(function() {
         draw(id, O);
         round++;
     }, 400)
 }
+/******************************************/
 
 
 
-// minimax agent
+/*******************minimax****************/
+
+//minimax agent
 function agentMinimax() {
-    let moves = getValidMoves();
+    let moves = getValidMoves(state);
     let scores = calcScores(moves);
     let id = moves[bestScoreIndex(scores)] 
     state[id] = O 
@@ -200,16 +206,15 @@ function bestScoreIndex(scores) {
 
 
 // minimax algorithm
-/*
-function minimax(tempState, score, isMax, depth) {
+function minimax(tempState, isMax, depth) {
     // base cases
     if (depth == 4 || check(tempState) != null)
         return score;
+
     score += getScore(state)
     if (isMax)
         return  
 }
-*/
 
 /* Points:
  * winning -> 1
@@ -223,5 +228,4 @@ function getScore(state) {
         score = 0;
     return score;
 }
-
-
+/******************************************/
