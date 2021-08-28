@@ -20,7 +20,6 @@ function play(id) {
     draw(id, X);
     round++;
 
-
     // check is game over
     let winner = check(state);
     // finish game if there is winner
