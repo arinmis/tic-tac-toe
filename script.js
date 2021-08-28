@@ -1,5 +1,5 @@
-const X = 1; // represent  player 
-const O = -1; // represent agent
+const X = -1; // represent  player 
+const O = 1; // represent agent
 const EMPTY = 0;
 const state = emptyState(); 
 let round = 0;
@@ -14,18 +14,15 @@ function play(id) {
     if (filledBoxs.has(id) || isGameFinished || round % 2 == 1) {
         return;
     }
-
-    let element = document.getElementById(id);
-
-    // player plays
-    element.innerHTML = 'X' 
-    state[id] = X 
+    // draw players move
+    state[id] = X; 
     filledBoxs.add(id)
+    draw(id, X);
     round++;
 
 
     // check is game over
-    let winner = check();
+    let winner = check(state);
     // finish game if there is winner
     if (winner != null) 
         finishGame(winner)
@@ -38,18 +35,15 @@ function play(id) {
     if (isGameFinished)
         return;
 
-    // agent plays
-    agent()
+    // minimax agent plays
+    agentRandom()
 
-    // check is game over
-    winner = check();
+    // check is game over 
+    winner = check(state)
+
     // finish game if there is winner
     if (winner != null) 
         finishGame(winner)
-
-
-    // draw
-
 }
 
 // finish game and display winner
@@ -73,7 +67,7 @@ function display(message) {
 
 
 // return winner if game is finished
-function check() {
+function check(state) {
     //check row
     for (let i = 0; i < 3; i++) {
         let sum = state[0 + (i * 3)] + state[1 + (i * 3)] + state[2 + (i * 3)];
@@ -102,6 +96,7 @@ function check() {
         return X;
     if (diagonal2 == -3)
         return O;
+    // no winner
     return null;
 }
 
@@ -130,20 +125,6 @@ function emptyState() {
     return state; 
 }
 
-// random player agent
-function agent() {
-    let validMoves = getValidMoves();
-    let id = validMoves[Math.floor(Math.random() * validMoves.length)]
-    element = document.getElementById(id);
-    // player plays
-    setTimeout(function() {
-        element.innerHTML = 'O' 
-        round++;
-    }, 400)
-    state[id] = O
-    filledBoxs.add(id)
-}
-
 // find all empty spots
 function getValidMoves() {
     let moves = []
@@ -153,3 +134,95 @@ function getValidMoves() {
     }
     return moves;
 }
+
+// draw move to ui 
+function draw(id, player) {
+    let element = document.getElementById(id);
+    // player plays
+    let sign;
+    if (player == -1) 
+        sign = 'X';
+    else
+        sign = 'O';
+    element.innerHTML = sign; 
+    // update datas
+}
+
+// random player agent
+function agentRandom() {
+    let validMoves = getValidMoves();
+    let id = validMoves[Math.floor(Math.random() * validMoves.length)]
+    // player plays
+    setTimeout(function() {
+        draw(id, O);
+        round++;
+    }, 400)
+}
+
+
+
+// minimax agent
+function agentMinimax() {
+    let moves = getValidMoves();
+    let scores = calcScores(moves);
+    let id = moves[bestScoreIndex(scores)] 
+    state[id] = O 
+    filledBoxs.add(id)
+    setTimeout(function() {
+        draw(id, O);
+        round++;
+    }, 400)
+}
+
+// return score of each possible move 
+function calcScores(moves) {
+    scores = []
+    for (let i = 0; i < moves; i++) {
+        let originalState = [...state]
+        state[moves[i]] = O;
+        scores.push(minimax(state, 0, true, 0));
+        state = originalState;
+    }
+    return scores;
+}
+
+// return max element index
+function bestScoreIndex(scores) {
+    let maxIndex = 0;
+    let maxValue = scores[0];
+    for (let i = 1; i < scores.length; i++) {
+        if (scores[i] > maxValue) {
+            maxIndex = i;
+            maxValue = scores[i];
+        }
+    }
+    return maxIndex;
+}
+
+
+// minimax algorithm
+/*
+function minimax(tempState, score, isMax, depth) {
+    // base cases
+    if (depth == 4 || check(tempState) != null)
+        return score;
+    score += getScore(state)
+    if (isMax)
+        return  
+}
+*/
+
+/* Points:
+ * winning -> 1
+ * losing -> -1
+ * drawing -> 0
+ */
+function getScore(state) {
+    let score = check(state)
+    // game doesn't end
+    if (score == null)
+        score = 0;
+    return score;
+}
+
+
