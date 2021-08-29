@@ -28,16 +28,17 @@ function play(id) {
     if (winner != null) 
         finishGame(winner)
 
-    if (round == 9 && !isGameFinished) {
-        isGameFinished = true;
-        display("Draw")
-    }
 
     if (isGameFinished)
         return;
 
     // minimax agent plays
     agentMinimax()
+
+    if (round == 9 && !isGameFinished) {
+        isGameFinished = true;
+        display("Draw")
+    }
 
     // check is game over 
     winner = check(state)
@@ -159,10 +160,10 @@ function agentRandom() {
     let id = validMoves[Math.floor(Math.random() * validMoves.length)]
     state[id] = O; 
     filledBoxs.add(id)
+    round++;
     // player plays
     setTimeout(function() {
         draw(id, O);
-        round++;
     }, 400)
 }
 /******************************************/
@@ -183,12 +184,12 @@ function agentMinimax() {
         scores.push(score);
         state = originalState;
     }
-    let id = moves[bestScoreIndex(scores, true)]   
+    let id = moves[bestScoreIndex(scores)]   
     state[id] = O 
     filledBoxs.add(id)
+    round++;
     setTimeout(function() {
         draw(id, O);
-        round++;
     }, 400)
 }
 
@@ -198,7 +199,7 @@ function minimax(futureState, isMax, depth) {
     // check for winner 
     let result = check(futureState)
     if (result != null)
-        return result;
+        return result / depth;
     // check is game ended
     if (isDraw(futureState)) { 
         return 0;
@@ -221,29 +222,28 @@ function minimax(futureState, isMax, depth) {
         }
         futureState = originalState;
     }
-    return score;
+    return score / depth;
 }
 
 
-// return max element index
-function bestScoreIndex(scores, isMax) {
-    let optimalIndex = 0;
-    let optimalValue = scores[0];
-    for (let i = 1; i < scores.length; i++) {
-        if (isMax) {
-            if (scores[i] > optimalValue) {
-                optimalIndex = i;
-                optimalValue = scores[i];
-            }
-        }
-        else {
-            if (scores[i] < optimalValue) {
-                optimalIndex = i;
-                optimalValue = scores[i];
-            }
+// return one of the max element index
+function bestScoreIndex(scores) {
+    let bestScore = getBestScore(scores);
+    let optimalIndexes = [];
+    for (let i = 0; i < scores.length; i++) {
+        if (scores[i] == bestScore) {
+            optimalIndexes.push(i)
         }
     }
-    return optimalIndex;
+    return optimalIndexes[Math.floor(Math.random() * optimalIndexes.length)];
+}
+
+// find best score
+function getBestScore(scores) {
+    let max = scores[0];
+    for (let i = 1; i < scores.length; i++) 
+        max = Math.max(max, scores[i]);
+    return max;
 }
 
 // return if game is drawn
