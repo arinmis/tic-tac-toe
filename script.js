@@ -1,7 +1,7 @@
 const X = -1; // represent  player 
 const O = 1; // represent agent
 const EMPTY = 0;
-const state = emptyState(); 
+let state = emptyState(); 
 let round = 0;
 let filledBoxs = new Set()  
 let isGameFinished = false;
@@ -35,7 +35,7 @@ function play(id) {
         return;
 
     // minimax agent plays
-    agentRandom()
+    agentMinimax()
 
     // check is game over 
     winner = check(state)
@@ -169,8 +169,17 @@ function agentRandom() {
 //minimax agent
 function agentMinimax() {
     let moves = getValidMoves(state);
-    let scores = calcScores(moves);
-    let id = moves[bestScoreIndex(scores)] 
+    // play for computer to see scores
+    let scores = []; 
+    for (let i = 0; i < moves.length; i++) {
+        let originalState = [...state]
+        state[moves[i]] = O;
+        scores.push(minimax(state, true, 0, 0));
+        state = originalState;
+    }
+    console.log(scores)
+    // select best for player O(computer)
+    let id = moves[bestScoreIndex(scores, true)]   
     state[id] = O 
     filledBoxs.add(id)
     setTimeout(function() {
@@ -179,53 +188,66 @@ function agentMinimax() {
     }, 400)
 }
 
-// return score of each possible move 
-function calcScores(moves) {
-    scores = []
-    for (let i = 0; i < moves; i++) {
-        let originalState = [...state]
-        state[moves[i]] = O;
-        scores.push(minimax(state, 0, true, 0));
-        state = originalState;
+
+// minimax algorithm: return best score of given state
+function minimax(futureState, isMax) {
+    //base cases
+    if (isDraw(futureState)) 
+        return 0;
+    let result = check(futureState)
+    if (result != null)
+        return result;
+    // inital score
+    let score = -Infinity;
+    if (!isMax) {
+        score = Infinity;
     }
-    return scores;
+    let futureMoves = getValidMoves(futureState);
+    for (let i = 0; i < futureMoves.length; i++) {
+        let originalState = [...futureState]
+        if (isMax) {
+            futureState[futureMoves[i]] = O;
+            score = Math.max(score, minimax(futureState, !isMax)); 
+        }
+        else {
+            futureState[futureMoves[i]] = X;
+            score = Math.min(score, minimax(futureState, !isMax)); 
+        }
+        futureState = originalState;
+    }
+    return score;
 }
+
 
 // return max element index
-function bestScoreIndex(scores) {
-    let maxIndex = 0;
-    let maxValue = scores[0];
+function bestScoreIndex(scores, isMax) {
+    let optimalIndex = 0;
+    let optimalValue = scores[0];
     for (let i = 1; i < scores.length; i++) {
-        if (scores[i] > maxValue) {
-            maxIndex = i;
-            maxValue = scores[i];
+        if (isMax) {
+            if (scores[i] > optimalValue) {
+                optimalIndex = i;
+                optimalValue = scores[i];
+            }
+        }
+        else {
+            if (scores[i] < optimalValue) {
+                optimalIndex = i;
+                optimalValue = scores[i];
+            }
         }
     }
-    return maxIndex;
+    return optimalIndex;
 }
 
 
-// minimax algorithm
-function minimax(tempState, isMax, depth) {
-    // base cases
-    if (depth == 4 || check(tempState) != null)
-        return score;
-
-    score += getScore(state)
-    if (isMax)
-        return  
-}
-
-/* Points:
- * winning -> 1
- * losing -> -1
- * drawing -> 0
- */
-function getScore(state) {
-    let score = check(state)
-    // game doesn't end
-    if (score == null)
-        score = 0;
-    return score;
+// return if game is drawn
+function isDraw(state) {
+    let count = 0;
+    for (let i = 0; i < state.length; i++) {
+        if (state[i] == 0)
+            count++;
+    }
+    return count == 0;
 }
 /******************************************/
