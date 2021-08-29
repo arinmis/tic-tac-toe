@@ -178,8 +178,6 @@ function agentMinimax() {
         scores.push(score);
         state = originalState;
     }
-    console.log(scores)
-    // select best for player O(computer)
     let id = moves[bestScoreIndex(scores, true)]   
     state[id] = O 
     filledBoxs.add(id)
@@ -192,12 +190,14 @@ function agentMinimax() {
 
 // minimax algorithm: return best score of given state
 function minimax(futureState, isMax, depth) {
-    //base cases
-    if (isDraw(futureState)) 
-        return 0;
+    // check for winner 
     let result = check(futureState)
     if (result != null)
-        return result / depth;
+        return result;
+    // check is game ended
+    if (isDraw(futureState)) { 
+        return 0;
+    }
     // inital score
     let score = -Infinity;
     if (!isMax) {
@@ -216,7 +216,7 @@ function minimax(futureState, isMax, depth) {
         }
         futureState = originalState;
     }
-    return score / depth;
+    return score;
 }
 
 
