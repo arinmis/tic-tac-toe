@@ -174,10 +174,11 @@ function agentMinimax() {
     for (let i = 0; i < moves.length; i++) {
         let originalState = [...state]
         state[moves[i]] = O;
-        let score = minimax(state, false, 0, 0);
+        let score = minimax(state, false, 1);
         scores.push(score);
         state = originalState;
     }
+    console.log(scores)
     // select best for player O(computer)
     let id = moves[bestScoreIndex(scores, true)]   
     state[id] = O 
@@ -190,13 +191,13 @@ function agentMinimax() {
 
 
 // minimax algorithm: return best score of given state
-function minimax(futureState, isMax) {
+function minimax(futureState, isMax, depth) {
     //base cases
     if (isDraw(futureState)) 
         return 0;
     let result = check(futureState)
     if (result != null)
-        return result;
+        return result / depth;
     // inital score
     let score = -Infinity;
     if (!isMax) {
@@ -207,15 +208,15 @@ function minimax(futureState, isMax) {
         let originalState = [...futureState]
         if (isMax) {
             futureState[futureMoves[i]] = O;
-            score = Math.max(score, minimax(futureState, !isMax)); 
+            score = Math.max(score, minimax(futureState, !isMax, depth + 1)); 
         }
         else {
             futureState[futureMoves[i]] = X;
-            score = Math.min(score, minimax(futureState, !isMax)); 
+            score = Math.min(score, minimax(futureState, !isMax, depth + 1)); 
         }
         futureState = originalState;
     }
-    return score;
+    return score / depth;
 }
 
 
@@ -239,7 +240,6 @@ function bestScoreIndex(scores, isMax) {
     }
     return optimalIndex;
 }
-
 
 // return if game is drawn
 function isDraw(state) {
