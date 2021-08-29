@@ -6,15 +6,17 @@ let round = 0;
 let filledBoxs = new Set()  
 let isGameFinished = false;
 
+agentMinimax()
+
 // put x or o
 function play(id) {
     id = parseInt(id) // to store in set
 
     // box already filled
-    if (filledBoxs.has(id) || isGameFinished || round % 2 == 1) {
+    if (filledBoxs.has(id) || isGameFinished || round % 2 == 0) {
         return;
     }
-    // draw players move
+    // player players move
     state[id] = X; 
     filledBoxs.add(id)
     draw(id, X);
@@ -114,6 +116,9 @@ function reset() {
     for (let i = 0; i < 9; i++) {
         document.getElementById(i).innerHTML = null; 
     }
+
+    // agent start other play
+    agentMinimax()
     
 }
 
