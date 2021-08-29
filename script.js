@@ -174,10 +174,10 @@ function agentMinimax() {
     for (let i = 0; i < moves.length; i++) {
         let originalState = [...state]
         state[moves[i]] = O;
-        scores.push(minimax(state, true, 0, 0));
+        let score = minimax(state, false, 0, 0);
+        scores.push(score);
         state = originalState;
     }
-    console.log(scores)
     // select best for player O(computer)
     let id = moves[bestScoreIndex(scores, true)]   
     state[id] = O 
