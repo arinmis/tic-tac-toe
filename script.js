@@ -35,17 +35,18 @@ function play(id) {
     // minimax agent plays
     agentMinimax()
 
-    if (round == 9 && !isGameFinished) {
-        isGameFinished = true;
-        display("Draw")
-    }
-
     // check is game over 
     winner = check(state)
 
     // finish game if there is winner
     if (winner != null) 
         finishGame(winner)
+
+    if (round == 9 && !isGameFinished) {
+        isGameFinished = true;
+        display("Draw")
+    }
+
 }
 
 // finish game and display winner
