@@ -44,7 +44,7 @@ function play(id) {
 
     if (round == 9 && !isGameFinished) {
         isGameFinished = true;
-        display("Draw")
+        display("Tie")
     }
 
 }
