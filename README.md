@@ -1,4 +1,8 @@
-# reinforced tictactoe
-Tic tac toe game with Reinforcement Learning
+# Tic Tac Toe 
+This is an implementation of 'tic-tac-toe' game with javascript.
+Agent of the game play it's moves with minimax algorithm.
 
-Read this: https://www.cs.dartmouth.edu/~lorenzo/teaching/cs134/Archive/Spring2009/final/PengTao/final_report.pdf  
+## Main Logic Behind The Minimax Algorithm
+
+### Resourses
+
