@@ -18,7 +18,7 @@ Minimax keeps searching until one of the game ending scenario is found. After th
 ![depth-3](https://user-images.githubusercontent.com/56651041/131475596-69f28772-a661-4957-b819-485040d743a5.png)
 2. Algorithm will select worst option for itself in this depth so that maximize opponents moves.
 ![depth-2 ](https://user-images.githubusercontent.com/56651041/131475602-f5aa726e-de5a-41cc-8363-8239595b7248.png)
-3. Finally, algorithm choose move which it will play. To do that, it just selects best score available.
+3. Finally, algorithm choose move which it will play. To do that, it just selects the best score that is available.
 ![depth-1](https://user-images.githubusercontent.com/56651041/131475601-04c05035-861f-4649-b8fd-d988aafa83a7.png)
 
 
