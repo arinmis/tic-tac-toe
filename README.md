@@ -2,7 +2,7 @@
 This is an implementation of 'tic-tac-toe' game with javascript.
 Agent of the game play it's moves with minimax algorithm.
 
-## Main Logic Behind The Minimax Algorithm
+## Logic Behind The Minimax Algorithm
 
 Minimax is recusive algorithm which searches for best score for given game. In tic-tac-toe there are 3 position that ends the game: Win, Tie, Loss.
 In order to find best move, those 3 ending scenario should be mapped with numbers:
