@@ -11,11 +11,13 @@ In order to find best move, those 3 ending scenario should be mapped to with num
     Tie  ->  0
     Loss -> -1
 
-Minimax stops searching until one of the game ending scenario is found. After that it selects move option that maximize itself or opponent move considering who has turn. That is why algorithm is called 'minimax'.
+Minimax stops searching until one of the game ending scenario is found. After that it selects move option that maximize itself or opponent move considering who has the turn. That is why algorithm is called 'minimax'.
   
 
-1.![depth-3](https://user-images.githubusercontent.com/56651041/131475596-69f28772-a661-4957-b819-485040d743a5.png)
-2.![depth-2 ](https://user-images.githubusercontent.com/56651041/131475602-f5aa726e-de5a-41cc-8363-8239595b7248.png)
+1. Algorithm finds all possible options. In each depth it eighter maximize(to select maximum score) or minimize(to select minimum score) the score. Because main pupouse of algorithm is finding best move, it starts with maximizing, and swithes with minimazing, and again maximazing and so forth. In other words, if algorithm will move maximize else minimize.
+![depth-3](https://user-images.githubusercontent.com/56651041/131475596-69f28772-a661-4957-b819-485040d743a5.png)
+2. In each depth or turn, it maximize or mi
+![depth-2 ](https://user-images.githubusercontent.com/56651041/131475602-f5aa726e-de5a-41cc-8363-8239595b7248.png)
 3.![depth-1](https://user-images.githubusercontent.com/56651041/131475601-04c05035-861f-4649-b8fd-d988aafa83a7.png)
 
 
