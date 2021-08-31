@@ -3,9 +3,11 @@ This is an implementation of 'tic-tac-toe' game with javascript.
 Agent of the game play it's moves with minimax algorithm.
 
 ## Main Logic Behind The Minimax Algorithm
-1.![depth-3](https://user-images.githubusercontent.com/56651041/131474091-35ca9cfd-a619-493a-bd9b-70d610e4d827.png)
-2.![depth-2](https://user-images.githubusercontent.com/56651041/131474087-b44fbf2a-52d5-4671-abee-007977878afe.png)
-3.![depth-1](https://user-images.githubusercontent.com/56651041/131474076-2eac1eb8-f911-4a6d-b6be-a5da9b776ba8.png)
+
+![depth-3](https://user-images.githubusercontent.com/56651041/131475596-69f28772-a661-4957-b819-485040d743a5.png)
+![depth-1](https://user-images.githubusercontent.com/56651041/131475601-04c05035-861f-4649-b8fd-d988aafa83a7.png)
+![depth-2 ](https://user-images.githubusercontent.com/56651041/131475602-f5aa726e-de5a-41cc-8363-8239595b7248.png)
+
 
 ### Resourses
 
