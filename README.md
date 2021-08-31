@@ -1,6 +1,7 @@
 # Tic Tac Toe 
 This is an implementation of 'tic-tac-toe' game with javascript.
-Agent of the game play it's moves with minimax algorithm.
+Agent of the game play it's moves with minimax algorithm.  
+You can play it from here: (Tic Tac Toe)[https://arinmis.github.io/tic-tac-toe/]
 
 ## Logic Behind The Minimax Algorithm
 
