@@ -4,6 +4,14 @@ Agent of the game play it's moves with minimax algorithm.
 
 ## Main Logic Behind The Minimax Algorithm
 
+Minimax is recurive algorithm which searches for best score for given game. In tic-tac-toe there are 3 position that ends the game: Win, Tie, Loss.
+In order to find best move, those 3 ending scenario should be mapped to with numbers:
+  Win  -> 1
+  Tie  -> 0
+  Loss -> -1
+ Minimax stops searching until one of the game ending scenario is found. After that it selects move option that maximize itself or opponent move considering who has turn. That is why algorithm is called 'minimax'.
+  
+
 1.![depth-3](https://user-images.githubusercontent.com/56651041/131475596-69f28772-a661-4957-b819-485040d743a5.png)
 2.![depth-2 ](https://user-images.githubusercontent.com/56651041/131475602-f5aa726e-de5a-41cc-8363-8239595b7248.png)
 3.![depth-1](https://user-images.githubusercontent.com/56651041/131475601-04c05035-861f-4649-b8fd-d988aafa83a7.png)
