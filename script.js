@@ -44,7 +44,7 @@ function play(id) {
 
     if (round == 9 && !isGameFinished) {
         isGameFinished = true;
-        display("Tie")
+        display("Tie", "text-white")
     }
 
 }
@@ -53,19 +53,27 @@ function play(id) {
 function finishGame(winner) {
     isGameFinished = true;
     let message;
-    if (winner == X) 
+    let textColor;
+    if (winner == X) { 
         message = "X won"
-    else if (winner == O)
-        message = "O won" 
-    display(message)
+        textColor = "text-success";
+    }
+    else if (winner == O) {
+        message = "O won"
+        textColor = "text-danger";
+    }
+    display(message, textColor)
 
 }
 
 // display pop-up message 
-function display(message) {
+function display(message, textColor) {
+    let display = document.getElementById("display");
+    display.classList.remove("text-danger", "text-success", "text-white")
+    display.classList.add(textColor)
     setTimeout(function() {
-        alert(message)
-    }, 500)
+        display.innerHTML = message;
+    }, 1000)
 }
 
 
@@ -122,6 +130,9 @@ function reset() {
     // agent start other play
     agentMinimax()
     
+    // clear screen  
+    let display = document.getElementById("display");
+    display.innerHTML = null;
 }
 
 function emptyState() {
