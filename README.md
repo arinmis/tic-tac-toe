@@ -28,4 +28,4 @@ Minimax keeps searching until one of the game ending scenario is found. After th
   [The Coding Train](https://www.youtube.com/watch?v=trKjYdBASyQ&ab_channel=TheCodingTrain)
 
 #### To Do:
-  - Remove pop-up messages :DONE
+  - If the restart button is pressed rapidly more than once, game plays more than one move.
