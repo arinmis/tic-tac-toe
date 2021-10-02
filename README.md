@@ -1,7 +1,7 @@
 # Tic Tac Toe 
 This is an implementation of 'tic-tac-toe' game with javascript. Agent of the game play it's moves with minimax algorithm.  
-You can play it from here: [Tic Tac Toe](https://arinmis.github.io/tic-tac-toe/ )
-<img height="200" alt="portfolio_view" src="https://user-images.githubusercontent.com/56651041/131475596-69f28772-a661-4957-b819-485040d743a5.png">
+You can play it from here: [Tic Tac Toe](https://arinmis.github.io/tic-tac-toe/)
+
 ## Logic Behind The Minimax Algorithm
 
 Minimax is recusive algorithm which searches for best score for given game. In tic-tac-toe there are 3 position that ends the game: Win, Tie, Loss.
